@@ -10,33 +10,154 @@
 <!--</html>-->
 
 
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [];-->
+<!--      dados.push('A'); // posicao 0-->
+<!--      dados.push('B'); // posicao 1-->
+<!--      dados.push('C'); // posicao 2-->
+
+<!--      for (i = 0; i < dados.length; i++) {-->
+<!--        alert('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--        console.log('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--      }-->
+<!--      let removido = dados.shift();-->
+<!--      alert('removido: ' + removido);-->
+<!--      console.log('removido: ' + removido);-->
+
+<!--      for (i = 0; i < dados.length; i++) {-->
+<!--        alert('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--        console.log('Elemento ' + (i + 1) + "; " + dados[i]);-->
+
+
+
+<!--      }-->
+
+<!--    </script>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [];-->
+<!--      dados.push('A'); // posicao 0-->
+<!--      dados.push('B'); // posicao 1-->
+<!--      dados.push('C'); // posicao 2-->
+
+<!--      for (i = 0; i < dados.length; i++) {-->
+<!--        alert('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--        console.log('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--      }-->
+<!--      let removido = dados.pop();-->
+<!--      alert('removido: ' + removido);-->
+<!--      console.log('removido: ' + removido);-->
+
+<!--      for (i = 0; i < dados.length; i++) {-->
+<!--        alert('Elemento ' + (i + 1) + "; " + dados[i]);-->
+<!--        console.log('Elemento ' + (i + 1) + "; " + dados[i]);-->
+
+<!--      }-->
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [10, 20, 30, 40, 50];-->
+<!--      let soma = 0;-->
+
+<!--      for (let i = 0; i < dados.length; i++) {-->
+<!--          soma = soma + dados[i];   // ou pode utilizar:  soma =+ dados[i];-->
+<!--       }-->
+<!--      console.log( "Soma = " + soma );-->
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [8, 15, 3, 27, 12];-->
+<!--      let maior = dados[0];-->
+
+<!--      for (let i = 0; i < dados.length; i++) {-->
+<!--        if (dados[i] > maior) {-->
+<!--            maior = dados[i];-->
+<!--        }-->
+<!--      }-->
+<!--      console.log( "Maior valor = " + maior);-->
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [2,5,2,7,2,9];-->
+<!--      let alvo = 2;-->
+<!--      let contador = 0;-->
+
+<!--      for (let i = 0; i < dados.length; i++) {-->
+<!--        if (dados[i] === alvo) {-->
+
+<!--            contador++;-->
+<!--            break;-->
+<!--        }-->
+<!--      }-->
+<!--      if (contador == 0)-->
+<!--        console.log("Valor nao encontrado no vetor");-->
+<!--      else-->
+<!--          if (contador > 1)-->
+<!--            console.log("Encontrado ",contador,"vezes");-->
+<!--          else-->
+<!--              console.log("Valor encontrado 1 vez");-->
+
+<!--      -->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <html>
 <head>
     <script>
-      let dados = [];
-      dados.push('A');
-      dados.push('B');
-      dados.push('C');
+      let dados = [10,20,30,40,50];
+      let ordenado = true;
 
-      for (i = 0; i < dados.length; i++) {
-        alert('Elemento ' + (i + 1) + "; " + dados[i]);
-        console.log('Elemento ' + (i + 1) + "; " + dados[i]);
+      for (let i = 0; i < dados.length; i++) {
+        if (dados[i] > dados[i + 1]){
+            ordenado = false;
+            break;
+
+        }
       }
-      let removido = dados.shift();
-      alert('removido: ' + removido);
-      console.log('removido: ' + removido);
+      console.log("ordenado?", ordenado);
 
-      for (i = 0; i < dados.length; i++) {
-        alert('Elemento ' + (i + 1) + "; " + dados[i]);
-        console.log('Elemento ' + (i + 1) + "; " + dados[i]);
-
-
-
-      }
 
     </script>
 </head>
-
 <body>
 
 </body>
