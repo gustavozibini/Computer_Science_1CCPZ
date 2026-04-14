@@ -140,25 +140,210 @@
 <!--</body>-->
 <!--</html>-->
 
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [10,20,30,40,50];-->
+<!--      let ordenado = true;-->
+
+<!--      for (let i = 0; i < dados.length; i++) {-->
+<!--        if (dados[i] > dados[i + 1]){-->
+<!--            ordenado = false;-->
+<!--            break;-->
+
+<!--        }-->
+<!--      }-->
+<!--      console.log("ordenado?", ordenado);-->
+
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [10,20,30,40,50];-->
+
+
+<!--    console.log(dados);-->
+
+<!--    //remove um elemento na pilha-->
+<!--    let removido = dados.pop();-->
+
+<!--    console.log ('removido =', removido);-->
+<!--    console.log(dados);-->
+
+
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [10,20,30,40,50];-->
+
+
+<!--    console.log(dados);-->
+
+<!--    //remove um elemento na pilha-->
+<!--    let removido = dados.pop();-->
+
+<!--    console.log ('removido =', removido);-->
+<!--    console.log(dados);-->
+
+
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--      let dados = [10,20,30,40,50];-->
+
+
+<!--    console.log(dados);-->
+
+<!--    //remove um elemento na pilha-->
+<!--    let removido = dados.shift();-->
+
+<!--    console.log ('removido =', removido);-->
+<!--    console.log(dados);-->
+
+
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--        let dados = [10,20,30,40];-->
+<!--        let valor = 25;-->
+<!--        let posicao = 0;-->
+
+<!--        console.log(dados);-->
+<!--        dados.push(0); //adiciona o seguinte valor no final da fila-->
+<!--        console.log(dados);-->
+<!--        for (let i = dados.length - 1; i > posicao; i&#45;&#45;) {-->
+<!--            dados[i] = dados[i - 1];-->
+<!--            console.log("vetor depois da " + (dados.length-i) + "passagem= " + dados);-->
+<!--        }-->
+<!--        //insere valor (25) na posicao (2)-->
+<!--        dados[posicao] = valor;-->
+<!--        console.log(dados);-->
+
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--        let dados = [10,20,30,40,50];-->
+<!--        let posicao = 1;-->
+
+<!--        console.log(dados);-->
+<!--        c = 1;-->
+<!--        for (let i = posicao; i < dados.length - 1; i++){-->
+<!--            dados[i] = dados[i+1];-->
+<!--            console.log("vetor depois da " + c + "passagem= " + dados);-->
+<!--            c++;-->
+<!--        }-->
+<!--        let removido = dados.pop();-->
+<!--        console.log("removido = "+ removido);-->
+
+<!--        console.log(dados);-->
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<html>-->
+<!--<head>-->
+<!--    <script>-->
+<!--        let dados = [10,20,30,40,50];-->
+<!--        let posicao = 1;-->
+
+<!--        console.log(dados);-->
+<!--        c = 1;-->
+<!--        for (let i = posicao; i < dados.length - 1; i++){-->
+<!--            dados[i] = dados[i+1];-->
+<!--            console.log("vetor depois da " + c + "passagem= " + dados);-->
+<!--            c++;-->
+<!--        }-->
+<!--        let removido = dados.pop();-->
+<!--        console.log("removido = "+ removido);-->
+
+<!--        console.log(dados);-->
+
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <html>
 <head>
-    <script>
-      let dados = [10,20,30,40,50];
-      let ordenado = true;
-
-      for (let i = 0; i < dados.length; i++) {
-        if (dados[i] > dados[i + 1]){
-            ordenado = false;
-            break;
-
-        }
-      }
-      console.log("ordenado?", ordenado);
-
-
-    </script>
+    <title>Exemplo de Pilha</title>
 </head>
 <body>
+    <script>
+        let pilha = [];
 
+        function push(x) {
+            pilha.push(x);
+        }
+
+        function pop() {
+            if (pilha.length === 0) {
+                return 'Pilha Vazia';
+            }
+            return pilha.pop();
+        }
+
+        function peek() {
+            if (pilha.length === 0)
+                return 'Pilha Vazia';
+
+            return pilha[pilha.length - 1];
+        }
+
+        // Testando a pilha
+        push('A');
+        push('B');
+        push('C');
+
+        console.log(peek()); // Mostra 'C' (o último elemento)
+        console.log(pop());  // Remove e mostra 'C'
+        console.log(pilha);  // Mostra a pilha restante: ['A', 'B']
+
+    </script>
 </body>
 </html>
