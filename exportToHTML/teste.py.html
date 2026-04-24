@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>teste.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #cf8e6d;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+teste.py</font>
+</center></td></tr></table>
+<pre><span class="s0"># 1. O usuário digita 2 valores</span>
+<span class="s1">num1 </span><span class="s2">= </span><span class="s1">int</span><span class="s2">(</span><span class="s1">input</span><span class="s2">(</span><span class="s3">&quot;Digite o primeiro número: &quot;</span><span class="s2">))</span>
+<span class="s1">num2 </span><span class="s2">= </span><span class="s1">int</span><span class="s2">(</span><span class="s1">input</span><span class="s2">(</span><span class="s3">&quot;Digite o segundo número: &quot;</span><span class="s2">))</span>
+
+<span class="s0"># Mostrando os valores em binário para facilitar a conferência visual</span>
+<span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;</span><span class="s4">\n</span><span class="s3">-&gt; Binário do 1º número: </span><span class="s4">{</span><span class="s1">num1</span><span class="s4">:</span><span class="s3">b</span><span class="s4">}</span><span class="s3">&quot;</span><span class="s2">)</span>
+<span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;-&gt; Binário do 2º número: </span><span class="s4">{</span><span class="s1">num2</span><span class="s4">:</span><span class="s3">b</span><span class="s4">}\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+
+<span class="s0"># 3. Realiza as duas operações lógicas</span>
+<span class="s1">resultado_and </span><span class="s2">= </span><span class="s1">num1 </span><span class="s2">&amp; </span><span class="s1">num2</span>
+<span class="s1">resultado_or </span><span class="s2">= </span><span class="s1">num1 </span><span class="s2">| </span><span class="s1">num2</span>
+
+<span class="s0"># 2. Converte para binário e fatia para tirar o &quot;0b&quot;</span>
+<span class="s1">bin_and </span><span class="s2">= </span><span class="s1">bin</span><span class="s2">(</span><span class="s1">resultado_and</span><span class="s2">)[</span><span class="s5">2</span><span class="s2">:]</span>
+<span class="s1">bin_or </span><span class="s2">= </span><span class="s1">bin</span><span class="s2">(</span><span class="s1">resultado_or</span><span class="s2">)[</span><span class="s5">2</span><span class="s2">:]</span>
+
+<span class="s0"># Exibe os resultados</span>
+<span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Resultado da operação AND (&amp;): </span><span class="s4">{</span><span class="s1">bin_and</span><span class="s4">}</span><span class="s3">&quot;</span><span class="s2">)</span>
+<span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Resultado da operação OR (|):  </span><span class="s4">{</span><span class="s1">bin_or</span><span class="s4">}</span><span class="s3">&quot;</span><span class="s2">)</span></pre>
+</body>
+</html>
