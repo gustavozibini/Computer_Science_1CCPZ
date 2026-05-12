@@ -6,91 +6,40 @@
 </head>
 <body>
 
-
-
-
 <style>
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    background: white;
-}
-
-.glow-on-hover {
-    width: 220px;
-    height: 50px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left:-2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.glow-on-hover:active {
-    color: #000
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
+    body{
+        font-family: Arial;
+        margin: 30px;
+    }
+    input{
+        width: 450px;
+    }
+    button{
+        width: 150px;
+    }
+    input, button{
+        margin: 5px;
+        padding: 8px;
+    }
+    #saida {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+    }
 
 </style>
 
-
-
     <h1>Lista Encadeada (simples)</h1>
     <label for="nome">Digite o nome: </label>
-    <input type = "text" id = "nome" placeholder = "">
-    <button class="glow-on-hover" onclick = "adicionar()">Adicionar</button>
-    <button class="glow-on-hover" onclick = "mostrar()">Mostrar Lista</button>
-
-
+    <input type="text" id="nome" placeholder = "Digite um nome">
+    <br>
+    <button onclick="adicionarFim()">Adicionar no fim</button>
+    <button onclick="adicionarInicio()">Adicionar no Inicio</button>
+    <button onclick="removerInicio()">Remover Inicio</button>
+    <br>
+    <button onclick="contar()">Contar Elementos</button>
+    <button onclick="remover()">Remover Elemento</button>
+    <button onclick="mostrar()">Mostrar Lista</button>
 
     <div id="saida"></div>
 
@@ -99,11 +48,10 @@ body {
 
         let valores = [];
         let proximo = [];
-
         let inicio = -1;
         let ultimo= -1;
 
-        function adicionar() {
+        function adicionarFim() {
             let nome = document.getElementById('nome').value;
             if (nome === "") {
                 alert("Digite um nome");
@@ -112,7 +60,6 @@ body {
             let novoIndice = valores.length;
             valores.push(nome);
             proximo.push(-1);
-
             if(inicio === -1) {
                 inicio = novoIndice;
                 ultimo = novoIndice;
@@ -123,24 +70,63 @@ body {
             }
 
             document.getElementById('nome').value = "";
-            document.getElementById('saida').innerHTML = "Elemento Adicionado";
+            alert("Elemento Adicionado");
+            mostrar();
+        }
 
+        function adicionarInicio() {
+            let nome = document.getElementById('nome').value;
+            if (nome === "") {
+                alert("Digite um nome");
+                return;
+            }
+            let novoIndice = valores.length;
+            valores.push(nome);
+            proximo.push(inicio);
+            inicio = novoIndice;
+            if(ultimo === -1) {
+                ultimo = novoIndice;
+            }
+            document.getElementById('nome').value = "";
+            alert("Elemento Adicionado");
+            mostrar();
+        }
+
+        function removerInicio() {
+            if (inicio === -1) {
+                alert("Lista vazia");
+                return;
+            }
+            inicio = proximo[inicio];
+            if (inicio === -1) {
+                ultimo = -1;
+            }
+            mostrar();
+        }
+
+        function contar() {
+            let quantidade = 0;
+            let atual = inicio;
+            while (atual !== -1) {
+                quantidade++;
+                atual = proximo[atual];
+            }
+            document.getElementById('saida').innerHTML = "Quantidade de elementos: " + quantidade;
         }
 
         function mostrar() {
             let resultado = "";
             let atual = inicio;
-
-            if (inicio === -1) {
+        while (atual !== -1) {
+            resultado += valores[atual] + " -> ";
+            atual = proximo[atual];
+        }
+        if (inicio === -1) {
                 resultado = "Lista Vazia";
             }
-
-            while (atual !== -1) {
-                resultado += valores[atual] + " -> ";
-                atual = proximo[atual];
+            else {
+                resultado += "null";
             }
-
-            resultado += "null";
 
             document.getElementById('saida').innerHTML = resultado;
 
