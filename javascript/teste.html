@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas 1</title>
+</head>
+
+<style>
+    body{
+        font-family: Arial;
+        margin: 30px;
+    }
+
+    button {
+        width: 150px;
+    }
+
+    input {
+        width: 450px;
+    }
+
+    input, button {
+        margin: 5px;
+        padding: 8px;
+    }
+
+    #saida {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<body>
+    <h1>Playlist de músicas</h1>
+    <label for="nome">Digite o nome da música: </label>
+    <input type="text" name="nome" id="nome" placeholder="digite a musica">
+    <hr>
+    <br>
+    <button onclick="adicionarFim()">Adicionar no fim</button>
+    <button onclick="adicionarInicio()">Adicionar ao início</button>
+    <button onclick="removerInicio()">Remover início</button>
+    <br>
+    <button onclick="contar()">Contar músicas</button>
+    <button onclick="removerElemento()">Remover música</button>
+    <button onclick="mostrar()">Mostrar Playlist</button>
+    <br>
+    <button onclick="moverElemento()">Mover música</button>
+    <button onclick="embaralhar()">Embaralhar músicas</button>
+    <div id="saida"></div>
+    <script>
+
+        // "lista encadeada"
+        let valores = [];
+        let proximo = [];
+        let inicio = -1;
+        let ultimo = -1;
+
+
+        function moverElemento() {
+            let nome = document.getElementById("nome").value;
+            if (nome === "") {
+                alert("Digite um nome");
+                return;
+            }
+
+            if (inicio === -1) {
+                document.getElementById("saida").innerHTML = "Playlist vazia";
+                return;
+            }
+
+            let quantidade = 0;
+            let indiceAtual = inicio;
+            while (indiceAtual !== -1) {
+                quantidade++;
+                indiceAtual = proximo[indiceAtual];
+            }
+
+            let novaPosicao = parseInt(prompt("Digite a nova posição da música (1 até " + quantidade + "):"));
+            if (isNaN(novaPosicao) || novaPosicao < 1 || novaPosicao > quantidade) {
+                alert("Posição inválida");
+                return;
+            }
+
+            let atual = inicio;
+            let anterior = -1;
+            let posicaoAtual = 1;
+
+            while (atual !== -1 && valores[atual] !== nome) {
+                anterior = atual;
+                atual = proximo[atual];
+                posicaoAtual++;
+            }
+
+            if (atual === -1) {
+                document.getElementById("saida").innerHTML = "Nome não encontrado na Lista";
+                return;
+            }
+
+            if (posicaoAtual === novaPosicao) {
+                document.getElementById("nome").value = "";
+                mostrar();
+                return;
+            }
+
+            if (anterior === -1) {
+                inicio = proximo[atual];
+            } else {
+                proximo[anterior] = proximo[atual];
+            }
+
+            if (atual === ultimo) {
+                ultimo = anterior;
+            }
+
+            if (novaPosicao === 1) {
+                proximo[atual] = inicio;
+                inicio = atual;
+                if (ultimo === -1) {
+                    ultimo = atual;
+                }
+            } else {
+                let anteriorDestino = inicio;
+                let posicao = 1;
+
+                while (posicao < novaPosicao - 1 && proximo[anteriorDestino] !== -1) {
+                    anteriorDestino = proximo[anteriorDestino];
+                    posicao++;
+                }
+
+                proximo[atual] = proximo[anteriorDestino];
+                proximo[anteriorDestino] = atual;
+
+                if (proximo[atual] === -1) {
+                    ultimo = atual;
+                }
+            }
+
+            document.getElementById("nome").value = "";
+            mostrar();
+        }
+
+        function embaralhar() {
+            if (inicio === -1 || inicio === ultimo) {
+                mostrar();
+                return;
+            }
+
+            let indices = [];
+            let atual = inicio;
+
+            while (atual !== -1) {
+                indices.push(atual);
+                atual = proximo[atual];
+            }
+
+            for (let i = indices.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                let temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
+            }
+
+            inicio = indices[0];
+
+            for (let i = 0; i < indices.length - 1; i++) {
+                proximo[indices[i]] = indices[i + 1];
+            }
+
+            ultimo = indices[indices.length - 1];
+            proximo[ultimo] = -1;
+
+            mostrar();
+        }
+
+
+
+
+
+        function adicionarFim() {
+            let nome = document.getElementById("nome").value;
+            if (nome === "") {
+                alert("Digite um nome");
+                return;
+            }
+
+            let novoIndice = valores.length;
+            valores.push(nome);
+            proximo.push(-1);
+            if (inicio === -1) {
+                inicio = novoIndice;
+                ultimo = novoIndice;
+            } else {
+
+                proximo[ultimo] = novoIndice;
+                ultimo = novoIndice;
+            }
+
+            document.getElementById("nome").value = "";
+            mostrar();
+        }
+
+        function adicionarInicio() {
+            let nome = document.getElementById("nome").value;
+            if (nome === "") {
+                alert("Digite um nome");
+                return;
+            }
+
+            let novoIndice = valores.length;
+            valores.push(nome);
+            proximo.push(inicio);
+            inicio = novoIndice;
+            if (ultimo === -1) {
+                ultimo = novoIndice;
+            }
+
+            document.getElementById("nome").value = "";
+            mostrar();
+        }
+
+        function removerInicio() {
+            if (inicio === -1) {
+                alert("Lista vazia");
+                return;
+            }
+
+            inicio = proximo[inicio];
+            if (inicio === -1) {
+                ultimo = -1;
+            }
+
+            mostrar();
+        }
+
+        function contar() {
+            let quantidade = 0;
+            let atual = inicio;
+            while (atual !== -1) {
+                quantidade++;
+                atual = proximo[atual];
+            }
+
+            document.getElementById("saida").innerHTML =
+                "Quantidade de músicas: " + quantidade;
+        }
+
+        function removerElemento() {
+            let nome = document.getElementById("nome").value;
+            if (nome === "") {
+                alert("Digite um nome");
+                return;
+            }
+
+            if (inicio === -1) {
+                document.getElementById("saida").innerHTML = "Playlist vazia";
+                return;
+            }
+
+            let atual = inicio;
+            let anterior = -1;
+            while (atual !== -1 && valores[atual] !== nome) {
+                anterior = atual;
+                atual = proximo[atual];
+            }
+
+            if (atual === -1) {
+                document.getElementById("saida").innerHTML =
+                    "Nome não encontrado na Lista";
+                return;
+            }
+
+            if (anterior === -1) {
+                inicio = proximo[atual];
+            } else {
+
+                proximo[anterior] = proximo[atual];
+            }
+
+            if (atual === ultimo) {
+
+                ultimo = anterior;
+            }
+
+            document.getElementById("nome").value = "";
+            mostrar();
+        }
+
+        function mostrar() {
+            let resultado = "";
+            let atual = inicio;
+            if (inicio === -1) {
+                resultado = "Playlist vazia";
+            }
+            else {
+
+                while (atual !== -1) {
+                    resultado += valores[atual] + " → ";
+                    atual = proximo[atual];
+                }
+
+                resultado += "";
+            }
+
+            document.getElementById("saida").innerHTML = resultado;
+        }
+
+    </script>
+</body>
+</html>

@@ -113,7 +113,46 @@
             }
             document.getElementById('saida').innerHTML = "Quantidade de elementos: " + quantidade;
         }
-
+        // function removerElemento() {
+        //     let nome = document.getElementById("nome").value;
+        //     if (nome === "") {
+        //         alert("Digite um nome");
+        //         return;
+        //     }
+        //
+        //     if (inicio === -1) {
+        //         document.getElementById("saida").innerHTML = "Lista vazia";
+        //         return;
+        //     }
+        //
+        //     let atual = inicio;
+        //     let anterior = -1;
+        //     while (atual !== -1 && valores[atual] !== nome) {
+        //         anterior = atual;
+        //         atual = proximo[atual];
+        //     }
+        //
+        //     if (atual === -1) {
+        //         document.getElementById("saida").innerHTML =
+        //             "Nome não encontrado na Lista";
+        //         return;
+        //     }
+        //
+        //     if (anterior === -1) {
+        //         inicio = proximo[atual];
+        //     } else {
+        //
+        //         proximo[anterior] = proximo[atual];
+        //     }
+        //
+        //     if (atual === ultimo) {
+        //
+        //         ultimo = anterior;
+        //     }
+        //
+        //     document.getElementById("nome").value = "";
+        //     mostrar();
+        // }
         function mostrar() {
             let resultado = "";
             let atual = inicio;
