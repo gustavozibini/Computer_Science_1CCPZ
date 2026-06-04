@@ -173,11 +173,6 @@
 
             mostrar();
         }
-
-
-
-
-
         function adicionarFim() {
             let nome = document.getElementById("nome").value;
             if (nome === "") {
@@ -215,17 +210,14 @@
             if (ultimo === -1) {
                 ultimo = novoIndice;
             }
-
             document.getElementById("nome").value = "";
             mostrar();
         }
-
         function removerInicio() {
             if (inicio === -1) {
                 alert("Lista vazia");
                 return;
             }
-
             inicio = proximo[inicio];
             if (inicio === -1) {
                 ultimo = -1;
@@ -233,7 +225,6 @@
 
             mostrar();
         }
-
         function contar() {
             let quantidade = 0;
             let atual = inicio;
@@ -286,7 +277,6 @@
             document.getElementById("nome").value = "";
             mostrar();
         }
-
         function mostrar() {
             let resultado = "";
             let atual = inicio;
@@ -302,10 +292,8 @@
 
                 resultado += "";
             }
-
             document.getElementById("saida").innerHTML = resultado;
         }
-
     </script>
 </body>
 </html>
