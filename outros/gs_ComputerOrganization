@@ -1,13 +1,10 @@
-Global Solution
-Computer Organization and Architecture - 1º Semestre
-
-
 #include <Wire.h>
 #include <Adafruit_LiquidCrystal.h>
 #include <Adafruit_NeoPixel.h>
 
 Adafruit_LiquidCrystal lcd(2);
 
+// Mapeamento dos sensores e atuadores conectados ao Arduino.
 const int PINO_TMP = A0;
 const int PINO_LDR = A1;
 const int PINO_VIBRACAO = 2;
@@ -17,9 +14,11 @@ const int TOTAL_PIXELS = 12;
 
 Adafruit_NeoPixel ring(TOTAL_PIXELS, PINO_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 
+// Controla a animacao de alerta do anel RGB.
 bool estadoPisca = false;
 unsigned long ultimoTempoPisca = 0;
 
+// Mantem o anel em verde quando o sistema esta operando normalmente.
 void anelVerde() {
   for (int i = 0; i < TOTAL_PIXELS; i++) {
     ring.setPixelColor(i, ring.Color(0, 255, 0));
@@ -27,6 +26,7 @@ void anelVerde() {
   ring.show();
 }
 
+// Faz o anel alternar entre vermelho e apagado durante um alerta.
 void anelVermelhoPiscando() {
   unsigned long agora = millis();
 
@@ -47,9 +47,11 @@ void anelVermelhoPiscando() {
 }
 
 void setup() {
+  // Configura os pinos de entrada e saida do circuito.
   pinMode(PINO_VIBRACAO, INPUT);
   pinMode(PINO_BUZZER, OUTPUT);
 
+  // Inicializa o display LCD e o anel NeoPixel.
   lcd.begin(16, 2);
   lcd.setBacklight(HIGH);
 
@@ -67,6 +69,7 @@ void setup() {
 }
 
 void loop() {
+  // Le as informacoes dos sensores a cada ciclo do programa.
   int leituraTmp = analogRead(PINO_TMP);
   float tensao = leituraTmp * (5.0 / 1023.0);
   float temperatura = (tensao - 0.5) * 100.0;
@@ -74,6 +77,7 @@ void loop() {
   int luminosidade = 1023 - analogRead(PINO_LDR);
   bool vibracao = digitalRead(PINO_VIBRACAO) == LOW;
 
+  // Se algum valor estiver fora da faixa esperada, o sistema entra em alerta.
   if (temperatura > 80) {
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -106,6 +110,7 @@ void loop() {
     tone(PINO_BUZZER, 1200);
   }
   else {
+    // Em condicao normal, o sistema volta ao modo de monitoramento continuo.
     estadoPisca = false;
     anelVerde();
     noTone(PINO_BUZZER);
