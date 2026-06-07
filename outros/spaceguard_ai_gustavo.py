@@ -102,7 +102,9 @@ def montar_user_prompt(dados: dict) -> str:
     else:
         instrucao_riscos = (
             "No bloco 2. Riscos Identificados, escreva exatamente: "
-            "\"Nenhum risco crítico identificado.\""
+            "\"Nenhum risco crítico identificado.\"\n"
+            "No bloco 3. Previsão de Falha, escreva que não há previsão de falha crítica com os dados atuais.\n"
+            "No bloco 4. Ações Recomendadas, recomende apenas manter o monitoramento contínuo."
         )
 
     return f"""
@@ -132,6 +134,7 @@ Obrigatoriamente escreva os blocos 1, 2, 3 e 4.
 No bloco 3, descreva apenas falhas operacionais simuladas, como instabilidade do monitoramento, perda de confiabilidade ou interrupção parcial de subsistemas.
 No bloco 3, não mencione morte, astronautas, tripulação, perda total da missão ou danos irreparáveis.
 No bloco 4, inclua ações para todos os riscos presentes.
+Se "Riscos presentes" estiver como "nenhum", não recomende ações corretivas como reduzir temperatura, economia de energia ou reforço de comunicação.
 """
 
 
