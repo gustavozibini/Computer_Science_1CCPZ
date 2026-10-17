@@ -1,1 +1,0 @@
-nota_final = int(input('Digite a nota final: '))
