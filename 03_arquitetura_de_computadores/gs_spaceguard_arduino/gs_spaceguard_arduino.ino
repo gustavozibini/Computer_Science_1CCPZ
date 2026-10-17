@@ -1,0 +1,150 @@
+/*
+ * GS - SpaceGuard (Arduino)
+ * Monitora uma cápsula espacial simulada:
+ *   - Sensor de temperatura (TMP36) e de luz (LDR)
+ *   - Sensor de vibração
+ *   - Alertas: LCD, anel de LEDs NeoPixel (verde = ok, vermelho piscando = alerta) e buzzer
+ * Para abrir no Arduino IDE, a pasta e o arquivo .ino precisam ter o mesmo nome.
+ */
+#include <Wire.h>
+#include <Adafruit_LiquidCrystal.h>
+#include <Adafruit_NeoPixel.h>
+
+Adafruit_LiquidCrystal lcd(2);
+
+// Mapeamento dos sensores e atuadores conectados ao Arduino.
+const int PINO_TMP = A0;
+const int PINO_LDR = A1;
+const int PINO_VIBRACAO = 2;
+const int PINO_NEOPIXEL = 6;
+const int PINO_BUZZER = 8;
+const int TOTAL_PIXELS = 12;
+
+Adafruit_NeoPixel ring(TOTAL_PIXELS, PINO_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+
+// Controla a animacao de alerta do anel RGB.
+bool estadoPisca = false;
+unsigned long ultimoTempoPisca = 0;
+
+// Mantem o anel em verde quando o sistema esta operando normalmente.
+void anelVerde() {
+  for (int i = 0; i < TOTAL_PIXELS; i++) {
+    ring.setPixelColor(i, ring.Color(0, 255, 0));
+  }
+  ring.show();
+}
+
+// Faz o anel alternar entre vermelho e apagado durante um alerta.
+void anelVermelhoPiscando() {
+  unsigned long agora = millis();
+
+  if (agora - ultimoTempoPisca >= 500) {
+    ultimoTempoPisca = agora;
+    estadoPisca = !estadoPisca;
+
+    for (int i = 0; i < TOTAL_PIXELS; i++) {
+      if (estadoPisca) {
+        ring.setPixelColor(i, ring.Color(255, 0, 0));
+      } else {
+        ring.setPixelColor(i, ring.Color(0, 0, 0));
+      }
+    }
+
+    ring.show();
+  }
+}
+
+void setup() {
+  // Configura os pinos de entrada e saida do circuito.
+  pinMode(PINO_VIBRACAO, INPUT);
+  pinMode(PINO_BUZZER, OUTPUT);
+
+  // Inicializa o display LCD e o anel NeoPixel.
+  lcd.begin(16, 2);
+  lcd.setBacklight(HIGH);
+
+  ring.begin();
+  ring.show();
+  anelVerde();
+  noTone(PINO_BUZZER);
+
+  lcd.setCursor(0, 0);
+  lcd.print("SpaceGuard");
+  lcd.setCursor(0, 1);
+  lcd.print("Iniciando...");
+  delay(1500);
+  lcd.clear();
+}
+
+void loop() {
+  // Le as informacoes dos sensores a cada ciclo do programa.
+  int leituraTmp = analogRead(PINO_TMP);
+  // Converte a leitura (0 a 1023) em volts e depois em graus Celsius (fórmula do TMP36)
+  float tensao = leituraTmp * (5.0 / 1023.0);
+  float temperatura = (tensao - 0.5) * 100.0;
+
+  int luminosidade = 1023 - analogRead(PINO_LDR);
+  bool vibracao = digitalRead(PINO_VIBRACAO) == LOW;
+
+  // Se algum valor estiver fora da faixa esperada, o sistema entra em alerta.
+  if (temperatura > 80) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Temp:");
+    lcd.print(temperatura, 1);
+    lcd.print(" C");
+    lcd.setCursor(0, 1);
+    lcd.print("AQUECIMENTO!");
+    anelVermelhoPiscando();
+    tone(PINO_BUZZER, 1000);
+  }
+  else if (temperatura < 10) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Temp:");
+    lcd.print(temperatura, 1);
+    lcd.print(" C");
+    lcd.setCursor(0, 1);
+    lcd.print("TEMP BAIXA!");
+    anelVermelhoPiscando();
+    tone(PINO_BUZZER, 700);
+  }
+  else if (vibracao) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Vibracao: ON");
+    lcd.setCursor(0, 1);
+    lcd.print("ALTA VIBRACAO");
+    anelVermelhoPiscando();
+    tone(PINO_BUZZER, 1200);
+  }
+  else {
+    // Em condicao normal, o sistema volta ao modo de monitoramento continuo.
+    estadoPisca = false;
+    anelVerde();
+    noTone(PINO_BUZZER);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Temp:");
+    lcd.print(temperatura, 1);
+    lcd.print("C");
+
+    lcd.setCursor(0, 1);
+    lcd.print("Luz:");
+    lcd.print(luminosidade);
+    delay(2000);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Vibracao:");
+    lcd.setCursor(0, 1);
+    if (vibracao) {
+      lcd.print("Detectada");
+    } else {
+      lcd.print("Normal");
+    }
+  }
+
+  delay(300);
+}
